@@ -27,7 +27,12 @@ class Board extends React.Component {
     renderSquare(i) {
         return <Square
                     value={this.props.squares[i]}
-                    onClick={() => this.props.onClick(i)} />;
+                    onClick={() => {
+                        if (this.props.onClick) {
+                            this.props.onClick(i)
+                        }
+                    }}
+                />;
     }
 
     /**
@@ -157,6 +162,7 @@ class Game extends React.Component {
             return(
                 <li key={move}>
                     <button onClick={() => this.jumpTo(move)}>{desc}</button>
+                    <Board squares={step.squares} />
                 </li>
             );
         });
@@ -178,7 +184,7 @@ class Game extends React.Component {
                 </div>
                 <div className="game-info">
                     <div>{status}</div>
-                    <ol>{moves}</ol>
+                    <ol className="moves">{moves}</ol>
                 </div>
             </div>
         );
