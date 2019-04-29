@@ -19,6 +19,14 @@ class Square extends React.Component {
 }
 
 class Board extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            rows: 3,
+            columns: 3
+        };
+    }
+
     /**
      * @param {Number} i - Index (0-based) of the square array for which square needs to be rendered
      * @returns - Single square component to render
@@ -41,24 +49,18 @@ class Board extends React.Component {
      * @memberof Board
      */
     render() {
+        let boardRows = [];
+        for (let i = 0; i < this.state.rows; i++) {
+            let rowSquares = [];
+            for (let j = 0; j < this.state.columns; j++) {
+                let index = (i * this.state.rows) + j;
+                {rowSquares.push(this.renderSquare(index))}
+            }
+
+            boardRows.push(<div className="board-row">{rowSquares}</div>)
+        }
         return (
-            <div>
-                <div className="board-row">
-                    {this.renderSquare(0)}
-                    {this.renderSquare(1)}
-                    {this.renderSquare(2)}
-                </div>
-                <div className="board-row">
-                    {this.renderSquare(3)}
-                    {this.renderSquare(4)}
-                    {this.renderSquare(5)}
-                </div>
-                <div className="board-row">
-                    {this.renderSquare(6)}
-                    {this.renderSquare(7)}
-                    {this.renderSquare(8)}
-                </div>
-            </div>
+            <div>{boardRows}</div>
         );
     }
 }
