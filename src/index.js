@@ -76,7 +76,8 @@ class Game extends React.Component {
                 squares: Array(9).fill(null)
             }], // array will contain state of board at every step. Initially empty
             stepNumber: 0,  // on which step currently the user is
-            xIsNext: true   // Determine if next move is X or O
+            xIsNext: true,   // Determine if next move is X or O
+            isHistoryLoaded: false // Check to see if currently board is loaded from history
         };
     }
 
@@ -100,7 +101,8 @@ class Game extends React.Component {
                 squares: squares
             }]),
             stepNumber: history.length,
-            xIsNext: !this.state.xIsNext
+            xIsNext: !this.state.xIsNext,
+            isHistoryLoaded: false
         });
     }
 
@@ -140,7 +142,8 @@ class Game extends React.Component {
     jumpTo(step) {
         this.setState({
             stepNumber: step,
-            xIsNext: step % 2 === 0
+            xIsNext: step % 2 === 0,
+            isHistoryLoaded: true
         });
     }
 
@@ -158,10 +161,15 @@ class Game extends React.Component {
             const desc = move
                 ? 'Go to move #: ' + move
                 : 'Go to game start';
+            let squareButtonClass = '';
+
+            if (this.state.isHistoryLoaded && move === this.state.stepNumber) {
+                squareButtonClass = 'from-history';
+            }
 
             return(
                 <li key={move}>
-                    <button onClick={() => this.jumpTo(move)}>{desc}</button>
+                    <button className={squareButtonClass} onClick={() => this.jumpTo(move)}>{desc}</button>
                     <Board squares={step.squares} />
                 </li>
             );
