@@ -50,6 +50,11 @@ ul {
     margin-left: 20px;
 }
 
+.game-board .winning-move {
+    background: green;
+    color: white;
+}
+
 .moves .from-history {
     font-weight: bold;
 }
